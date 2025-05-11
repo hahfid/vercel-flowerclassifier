@@ -21,11 +21,11 @@ const SAMPLE_IMAGES = [
   },
   {
     name: "Tulip",
-    url: "https://unsplash.com/photos/shallow-focus-photography-of-white-and-pink-petaled-flowers-fY1ECB1RCd0"
+    url: "https://images.unsplash.com/photo-1468327768560-75b778cbb551?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8VHVsaXB8ZW58MHx8MHx8fDA%3D"
   },
   {
     name: "Orchid",
-    url: "https://unsplash.com/photos/purple-moth-orchids-in-close-up-photography-FP2Kf5DsSo8",
+    url: "https://images.unsplash.com/photo-1605996370592-b6f7a81e382e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8T3JjaGlkfGVufDB8fDB8fHww",
   },
 
 ]
