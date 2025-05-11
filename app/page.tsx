@@ -19,6 +19,15 @@ const SAMPLE_IMAGES = [
     name: "Sunflower",
     url: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=500&q=80",
   },
+  {
+    name: "Tulip",
+    url: "https://unsplash.com/photos/shallow-focus-photography-of-white-and-pink-petaled-flowers-fY1ECB1RCd0"
+  },
+  {
+    name: "Orchid",
+    url: "https://unsplash.com/photos/purple-moth-orchids-in-close-up-photography-FP2Kf5DsSo8",
+  },
+
 ]
 
 export default function FlowerClassifier() {
