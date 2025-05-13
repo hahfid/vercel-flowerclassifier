@@ -138,7 +138,7 @@ export function DebugPanel() {
   }
 
   return (
-    <Card className="mt-8 bg-gray-50">
+    <Card className="mt-8 bg-muted/40">
       <CardHeader>
         <CardTitle>API Debug Panel</CardTitle>
       </CardHeader>
@@ -172,13 +172,13 @@ export function DebugPanel() {
         {loading && <p className="mt-4">Running test...</p>}
 
         {error && (
-          <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-md">
-            <p className="text-red-600 whitespace-pre-wrap">{error}</p>
+          <div className="mt-4 p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900 rounded-md">
+            <p className="text-red-600 dark:text-red-400 whitespace-pre-wrap">{error}</p>
           </div>
         )}
 
         {result && (
-          <div className="mt-4 p-4 bg-gray-100 border border-gray-200 rounded-md">
+          <div className="mt-4 p-4 bg-muted border border-border rounded-md">
             <pre className="whitespace-pre-wrap text-sm">{result}</pre>
           </div>
         )}

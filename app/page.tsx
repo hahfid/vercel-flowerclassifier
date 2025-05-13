@@ -8,10 +8,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Loader2, Upload, Link, Flower2, Bug, AlertTriangle } from "lucide-react"
+import { Loader2, Upload, LinkIcon, Bug, AlertTriangle } from "lucide-react"
 import Image from "next/image"
 import { API_CONFIG } from "./config/api"
 import { DebugPanel } from "./components/debug-panel"
+import { Navbar } from "./components/navbar"
+import { ThemeDebug } from "./components/theme-debug"
 
 // Sample flower images for demo purposes
 const SAMPLE_IMAGES = [
@@ -21,13 +23,12 @@ const SAMPLE_IMAGES = [
   },
   {
     name: "Tulip",
-    url: "https://images.unsplash.com/photo-1468327768560-75b778cbb551?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8VHVsaXB8ZW58MHx8MHx8fDA%3D"
+    url: "https://images.unsplash.com/photo-1468327768560-75b778cbb551?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8VHVsaXB8ZW58MHx8MHx8fDA%3D",
   },
   {
     name: "Orchid",
     url: "https://images.unsplash.com/photo-1605996370592-b6f7a81e382e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8T3JjaGlkfGVufDB8fDB8fHww",
   },
-
 ]
 
 export default function FlowerClassifier() {
@@ -152,183 +153,181 @@ export default function FlowerClassifier() {
   }
 
   return (
-    <div className="container mx-auto py-10 px-4">
-      <div className="flex flex-col items-center justify-center mb-8">
-        <div className="flex items-center gap-2 mb-2">
-          <Flower2 className="h-8 w-8 text-pink-500" />
-          <h1 className="text-3xl font-bold">Flower Classifier</h1>
-        </div>
-        <p className="text-muted-foreground text-center max-w-md">
-          Upload an image or provide a URL to identify the type of flower with our AI-powered classifier.
-        </p>
-      </div>
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-1">
+        <div className="container mx-auto py-10 px-4">
+          <div className="flex flex-col items-center justify-center mb-8">
+            <h1 className="text-3xl font-bold mb-2">Flower Classification</h1>
+            <p className="text-muted-foreground text-center max-w-md">
+              Upload an image or provide a URL to identify the type of flower with our AI-powered classifier.
+            </p>
+          </div>
 
-      <Tabs defaultValue="upload" className="max-w-2xl mx-auto">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="upload">Upload Image</TabsTrigger>
-          <TabsTrigger value="url">Image URL</TabsTrigger>
-        </TabsList>
+          <Tabs defaultValue="upload" className="max-w-2xl mx-auto">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="upload">Upload Image</TabsTrigger>
+              <TabsTrigger value="url">Image URL</TabsTrigger>
+            </TabsList>
 
-        <TabsContent value="upload">
-          <Card>
-            <CardHeader>
-              <CardTitle>Upload an Image</CardTitle>
-              <CardDescription>Upload a flower image to classify its type</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label htmlFor="image">Image</Label>
-                <Input id="image" type="file" accept="image/*" onChange={handleFileChange} />
-              </div>
+            <TabsContent value="upload">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Upload an Image</CardTitle>
+                  <CardDescription>Upload a flower image to classify its type</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid w-full max-w-sm items-center gap-1.5">
+                    <Label htmlFor="image">Image</Label>
+                    <Input id="image" type="file" accept="image/*" onChange={handleFileChange} />
+                  </div>
 
-              {imagePreview && (
-                <div className="mt-4 relative aspect-square w-full max-w-sm mx-auto border rounded-md overflow-hidden">
-                  <Image src={imagePreview || "/placeholder.svg"} alt="Preview" fill className="object-contain" />
-                </div>
-              )}
-            </CardContent>
-            <CardFooter>
-              <Button onClick={classifyByUpload} disabled={!file || loading} className="w-full">
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Classifying...
-                  </>
-                ) : (
-                  <>
-                    <Upload className="mr-2 h-4 w-4" />
-                    Classify Flower
-                  </>
-                )}
-              </Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="url">
-          <Card>
-            <CardHeader>
-              <CardTitle>Image URL</CardTitle>
-              <CardDescription>Enter the URL of a flower image to classify</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="url">Image URL</Label>
-                <div className="flex gap-2">
-                  <Input
-                    id="url"
-                    type="url"
-                    placeholder="https://example.com/flower.jpg"
-                    value={imageUrl}
-                    onChange={handleUrlChange}
-                  />
-                  <Button variant="outline" onClick={previewUrl} disabled={!imageUrl}>
-                    Preview
-                  </Button>
-                </div>
-              </div>
-
-              {urlPreview && (
-                <div className="mt-4 relative aspect-square w-full max-w-sm mx-auto border rounded-md overflow-hidden">
-                  <Image src={urlPreview || "/placeholder.svg"} alt="Preview" fill className="object-contain" />
-                </div>
-              )}
-
-              {/* Sample images section */}
-              <div className="mt-6">
-                <h3 className="text-sm font-medium mb-2">Or try one of these sample images:</h3>
-                <div className="grid grid-cols-3 gap-2">
-                  {SAMPLE_IMAGES.map((sample, index) => (
-                    <div
-                      key={index}
-                      className="cursor-pointer border rounded-md overflow-hidden hover:border-pink-300 transition-colors"
-                      onClick={() => selectSampleImage(sample)}
-                    >
-                      <div className="relative aspect-square">
-                        <Image src={sample.url || "/placeholder.svg"} alt={sample.name} fill className="object-cover" />
-                      </div>
-                      <div className="p-1 text-center text-xs">{sample.name}</div>
+                  {imagePreview && (
+                    <div className="mt-4 relative aspect-square w-full max-w-sm mx-auto border rounded-md overflow-hidden">
+                      <Image src={imagePreview || "/placeholder.svg"} alt="Preview" fill className="object-contain" />
                     </div>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button onClick={classifyByUrl} disabled={!imageUrl || loading} className="w-full">
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Classifying...
-                  </>
-                ) : (
-                  <>
-                    <Link className="mr-2 h-4 w-4" />
-                    Classify Flower
-                  </>
-                )}
-              </Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-      </Tabs>
+                  )}
+                </CardContent>
+                <CardFooter>
+                  <Button onClick={classifyByUpload} disabled={!file || loading} className="w-full">
+                    {loading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Classifying...
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="mr-2 h-4 w-4" />
+                        Classify Flower
+                      </>
+                    )}
+                  </Button>
+                </CardFooter>
+              </Card>
+            </TabsContent>
 
-      {error && (
-        <div className="max-w-2xl mx-auto mt-8">
-          <Card className="bg-red-50 border-red-200">
-            <CardContent className="pt-6">
-              <p className="text-red-600">{error}</p>
-            </CardContent>
-          </Card>
+            <TabsContent value="url">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Image URL</CardTitle>
+                  <CardDescription>Enter the URL of a flower image to classify</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid w-full items-center gap-1.5">
+                    <Label htmlFor="url">Image URL</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        id="url"
+                        type="url"
+                        placeholder="https://example.com/flower.jpg"
+                        value={imageUrl}
+                        onChange={handleUrlChange}
+                      />
+                      <Button variant="outline" onClick={previewUrl} disabled={!imageUrl}>
+                        Preview
+                      </Button>
+                    </div>
+                  </div>
+
+                  {urlPreview && (
+                    <div className="mt-4 relative aspect-square w-full max-w-sm mx-auto border rounded-md overflow-hidden">
+                      <Image src={urlPreview || "/placeholder.svg"} alt="Preview" fill className="object-contain" />
+                    </div>
+                  )}
+
+                  {/* Sample images section */}
+                  <div className="mt-6">
+                    <h3 className="text-sm font-medium mb-2">Or try one of these sample images:</h3>
+                    <div className="grid grid-cols-3 gap-2">
+                      {SAMPLE_IMAGES.map((sample, index) => (
+                        <div
+                          key={index}
+                          className="cursor-pointer border rounded-md overflow-hidden hover:border-pink-300 dark:hover:border-pink-700 transition-colors"
+                          onClick={() => selectSampleImage(sample)}
+                        >
+                          <div className="relative aspect-square">
+                            <Image
+                              src={sample.url || "/placeholder.svg"}
+                              alt={sample.name}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                          <div className="p-1 text-center text-xs">{sample.name}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button onClick={classifyByUrl} disabled={!imageUrl || loading} className="w-full">
+                    {loading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Classifying...
+                      </>
+                    ) : (
+                      <>
+                        <LinkIcon className="mr-2 h-4 w-4" />
+                        Classify Flower
+                      </>
+                    )}
+                  </Button>
+                </CardFooter>
+              </Card>
+            </TabsContent>
+          </Tabs>
+
+          {error && (
+            <div className="max-w-2xl mx-auto mt-8">
+              <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-900">
+                <CardContent className="pt-6">
+                  <p className="text-red-600 dark:text-red-400">{error}</p>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {result && result.class && (
+            <div className="max-w-2xl mx-auto mt-8">
+              <Card className="bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-950/20 dark:to-purple-950/20 border-pink-200 dark:border-pink-900">
+                <CardHeader>
+                  <CardTitle className="text-center">Classification Result</CardTitle>
+                  {result.note && (
+                    <div className="flex items-center justify-center gap-2 mt-2 p-2 bg-yellow-50 dark:bg-yellow-950/20 rounded-md">
+                      <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                      <p className="text-sm text-yellow-700 dark:text-yellow-400">{result.note}</p>
+                    </div>
+                  )}
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col items-center justify-center space-y-4">
+                    <div className="text-center">
+                      <h3 className="text-3xl font-bold text-pink-600 dark:text-pink-400">{result.class}</h3>
+                      <p className="text-muted-foreground">Confidence: {result.confidence?.toFixed(1)}%</p>
+                    </div>
+
+                    <div className="w-full max-w-xs bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                      <div
+                        className="bg-pink-600 dark:bg-pink-500 h-2.5 rounded-full"
+                        style={{ width: `${result.confidence || 0}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* Theme debug component */}
+          
+
+          {/* Debug toggle button */}
+          
+
+          
         </div>
-      )}
-
-      {result && result.class && (
-        <div className="max-w-2xl mx-auto mt-8">
-          <Card className="bg-gradient-to-br from-pink-50 to-purple-50 border-pink-200">
-            <CardHeader>
-              <CardTitle className="text-center">Classification Result</CardTitle>
-              {result.note && (
-                <div className="flex items-center justify-center gap-2 mt-2 p-2 bg-yellow-50 rounded-md">
-                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                  <p className="text-sm text-yellow-700">{result.note}</p>
-                </div>
-              )}
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col items-center justify-center space-y-4">
-                <div className="text-center">
-                  <h3 className="text-3xl font-bold text-pink-600">{result.class}</h3>
-                  <p className="text-muted-foreground">Confidence: {result.confidence?.toFixed(1)}%</p>
-                </div>
-
-                <div className="w-full max-w-xs bg-gray-200 rounded-full h-2.5">
-                  <div className="bg-pink-600 h-2.5 rounded-full" style={{ width: `${result.confidence || 0}%` }}></div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
-      {/* Debug toggle button */}
-      <div className="max-w-2xl mx-auto mt-8 flex justify-end">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setShowDebug(!showDebug)}
-          className="flex items-center gap-1"
-        >
-          <Bug className="h-4 w-4" />
-          {showDebug ? "Hide Debug" : "Show Debug"}
-        </Button>
-      </div>
-
-      {/* Debug panel */}
-      {showDebug && (
-        <div className="max-w-2xl mx-auto">
-          <DebugPanel />
-        </div>
-      )}
+      </main>
     </div>
   )
 }
