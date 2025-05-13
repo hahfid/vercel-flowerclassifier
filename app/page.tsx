@@ -319,25 +319,9 @@ export default function FlowerClassifier() {
             </div>
           )}
 
-          {/* Debug toggle button */}
-          <div className="max-w-2xl mx-auto mt-8 flex justify-end">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowDebug(!showDebug)}
-              className="flex items-center gap-1"
-            >
-              <Bug className="h-4 w-4" />
-              {showDebug ? "Hide Debug" : "Show Debug"}
-            </Button>
-          </div>
+          
 
-          {/* Debug panel */}
-          {showDebug && (
-            <div className="max-w-2xl mx-auto">
-              <DebugPanel />
-            </div>
-          )}
+         
         </div>
       </main>
       <ThemeIndicator />
