@@ -24,7 +24,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange
+          disableTransitionOnChange={false}
           storageKey="flower-classifier-theme"
         >
           {children}

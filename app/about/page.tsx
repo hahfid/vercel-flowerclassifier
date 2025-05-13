@@ -3,7 +3,14 @@ import { Navbar } from "../components/navbar"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Github, Globe } from "lucide-react"
+import { ArrowRight, Github, Globe, CheckCircle } from "lucide-react"
+
+// Technology stack with categories
+const technologies = {
+  frontend: ["Next.js", "React", "Tailwind CSS", "TypeScript"],
+  backend: ["RESTful API", "HTTPS Support", "Proxy Handling"],
+  ai: ["Convolutional Neural Network (CNN)", "Image Classification", "Confidence Scoring"],
+}
 
 export default function AboutPage() {
   return (
@@ -44,7 +51,7 @@ export default function AboutPage() {
 
           <h2 className="text-2xl font-bold mb-4">How It Works</h2>
           <div className="grid md:grid-cols-3 gap-6 mb-12">
-            <Card>
+            <Card className="hover:shadow-md transition-all duration-200 hover:translate-y-[-5px]">
               <CardHeader>
                 <CardTitle>1. Upload or URL</CardTitle>
               </CardHeader>
@@ -54,7 +61,7 @@ export default function AboutPage() {
                 </p>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="hover:shadow-md transition-all duration-200 hover:translate-y-[-5px]">
               <CardHeader>
                 <CardTitle>2. AI Analysis</CardTitle>
               </CardHeader>
@@ -65,7 +72,7 @@ export default function AboutPage() {
                 </p>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="hover:shadow-md transition-all duration-200 hover:translate-y-[-5px]">
               <CardHeader>
                 <CardTitle>3. Get Results</CardTitle>
               </CardHeader>
@@ -79,26 +86,84 @@ export default function AboutPage() {
           </div>
 
           <h2 className="text-2xl font-bold mb-4">Technology</h2>
-          <Card className="mb-12">
-            <CardContent className="pt-6">
-              <p className="mb-4">Flower Classifier is built using modern web technologies and machine learning:</p>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>
-                  <strong>Frontend:</strong> Next.js, React, Tailwind CSS
-                </li>
-                <li>
-                  <strong>API:</strong> RESTful API with HTTPS support
-                </li>
-                <li>
-                  <strong>Machine Learning:</strong> Convolutional Neural Network (CNN) trained on thousands of flower
-                  images
-                </li>
-                <li>
-                  <strong>Supported Flowers:</strong> Our model can identify only 5 flower species(Lilly, Lotus, Orchid, Sunflower, Tulip)
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            <Card className="hover:shadow-md transition-all duration-200">
+              <CardHeader className="pb-2">
+                <CardTitle className="flex items-center gap-2">
+                  <span className="inline-block w-3 h-3 bg-blue-500 rounded-full"></span>
+                  Frontend
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  {technologies.frontend.map((tech, index) => (
+                    <li key={index} className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-blue-500 flex-shrink-0" />
+                      <span>{tech}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-md transition-all duration-200">
+              <CardHeader className="pb-2">
+                <CardTitle className="flex items-center gap-2">
+                  <span className="inline-block w-3 h-3 bg-green-500 rounded-full"></span>
+                  Backend
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  {technologies.backend.map((tech, index) => (
+                    <li key={index} className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
+                      <span>{tech}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-md transition-all duration-200">
+              <CardHeader className="pb-2">
+                <CardTitle className="flex items-center gap-2">
+                  <span className="inline-block w-3 h-3 bg-purple-500 rounded-full"></span>
+                  AI & ML
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  {technologies.ai.map((tech, index) => (
+                    <li key={index} className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-purple-500 flex-shrink-0" />
+                      <span>{tech}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="mb-12">
+            <Card className="hover:shadow-md transition-all duration-200">
+              <CardHeader>
+                <CardTitle>Supported Flowers</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                  {["Lilly", "Lotus", "Orchid", "Sunflower", "Tulip"].map((flower) => (
+                    <div
+                      key={flower}
+                      className="text-center p-3 bg-muted/40 rounded-lg hover:bg-muted transition-colors"
+                    >
+                      {flower}
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
           <h2 className="text-2xl font-bold mb-4">Connect With Us</h2>
           <div className="flex flex-wrap gap-4">

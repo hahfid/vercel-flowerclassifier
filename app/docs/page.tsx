@@ -20,7 +20,7 @@ export default function DocsPage() {
             </TabsList>
 
             <TabsContent value="upload">
-              <Card>
+              <Card className="hover:shadow-md transition-all duration-200">
                 <CardHeader>
                   <CardTitle>POST /predict/upload</CardTitle>
                   <CardDescription>Classifies a flower image uploaded as a file.</CardDescription>
@@ -30,7 +30,7 @@ export default function DocsPage() {
                     <h3 className="text-lg font-medium mb-2">Request</h3>
                     <p className="mb-2">Content-Type: multipart/form-data</p>
 
-                    <div className="border rounded-md overflow-hidden">
+                    <div className="border rounded-md overflow-hidden hover:border-primary/50 transition-colors">
                       <div className="bg-muted px-4 py-2 border-b">
                         <h4 className="font-medium">Request Body</h4>
                       </div>
@@ -62,7 +62,7 @@ export default function DocsPage() {
                     <p className="mb-2">Status Code: 200 OK</p>
                     <p className="mb-2">Content-Type: application/json</p>
 
-                    <div className="border rounded-md overflow-hidden">
+                    <div className="border rounded-md overflow-hidden hover:border-primary/50 transition-colors">
                       <div className="bg-muted px-4 py-2 border-b">
                         <h4 className="font-medium">Response Body</h4>
                       </div>
@@ -92,7 +92,7 @@ export default function DocsPage() {
 
                   <div>
                     <h3 className="text-lg font-medium mb-2">Example</h3>
-                    <div className="bg-muted p-4 rounded-md overflow-x-auto">
+                    <div className="bg-muted p-4 rounded-md overflow-x-auto hover:bg-muted/80 transition-colors">
                       <pre className="text-sm">
                         {`// Using fetch in JavaScript
 const formData = new FormData();
@@ -117,7 +117,7 @@ fetch('https://47.84.53.222/predict/upload', {
             </TabsContent>
 
             <TabsContent value="url">
-              <Card>
+              <Card className="hover:shadow-md transition-all duration-200">
                 <CardHeader>
                   <CardTitle>POST /predict/url</CardTitle>
                   <CardDescription>Classifies a flower image by its URL.</CardDescription>
@@ -127,7 +127,7 @@ fetch('https://47.84.53.222/predict/upload', {
                     <h3 className="text-lg font-medium mb-2">Request</h3>
                     <p className="mb-2">Content-Type: application/json</p>
 
-                    <div className="border rounded-md overflow-hidden">
+                    <div className="border rounded-md overflow-hidden hover:border-primary/50 transition-colors">
                       <div className="bg-muted px-4 py-2 border-b">
                         <h4 className="font-medium">Request Body</h4>
                       </div>
@@ -163,7 +163,7 @@ fetch('https://47.84.53.222/predict/upload', {
                     <p className="mb-2">Status Code: 200 OK</p>
                     <p className="mb-2">Content-Type: application/json</p>
 
-                    <div className="border rounded-md overflow-hidden">
+                    <div className="border rounded-md overflow-hidden hover:border-primary/50 transition-colors">
                       <div className="bg-muted px-4 py-2 border-b">
                         <h4 className="font-medium">Response Body</h4>
                       </div>
@@ -193,7 +193,7 @@ fetch('https://47.84.53.222/predict/upload', {
 
                   <div>
                     <h3 className="text-lg font-medium mb-2">Example</h3>
-                    <div className="bg-muted p-4 rounded-md overflow-x-auto">
+                    <div className="bg-muted p-4 rounded-md overflow-x-auto hover:bg-muted/80 transition-colors">
                       <pre className="text-sm">
                         {`// Using fetch in JavaScript
 fetch('https://47.84.53.222/predict/url', {
@@ -220,7 +220,7 @@ fetch('https://47.84.53.222/predict/url', {
           </Tabs>
 
           <div className="mt-8">
-            <Card>
+            <Card className="hover:shadow-md transition-all duration-200">
               <CardHeader>
                 <CardTitle>Notes</CardTitle>
               </CardHeader>

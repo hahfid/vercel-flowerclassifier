@@ -13,7 +13,7 @@ import Image from "next/image"
 import { API_CONFIG } from "./config/api"
 import { DebugPanel } from "./components/debug-panel"
 import { Navbar } from "./components/navbar"
-import { ThemeDebug } from "./components/theme-debug"
+import { ThemeIndicator } from "./components/theme-indicator"
 
 // Sample flower images for demo purposes
 const SAMPLE_IMAGES = [
@@ -171,7 +171,7 @@ export default function FlowerClassifier() {
             </TabsList>
 
             <TabsContent value="upload">
-              <Card>
+              <Card className="hover:shadow-md transition-all duration-200">
                 <CardHeader>
                   <CardTitle>Upload an Image</CardTitle>
                   <CardDescription>Upload a flower image to classify its type</CardDescription>
@@ -183,7 +183,7 @@ export default function FlowerClassifier() {
                   </div>
 
                   {imagePreview && (
-                    <div className="mt-4 relative aspect-square w-full max-w-sm mx-auto border rounded-md overflow-hidden">
+                    <div className="mt-4 relative aspect-square w-full max-w-sm mx-auto border rounded-md overflow-hidden hover:border-primary/50 transition-colors">
                       <Image src={imagePreview || "/placeholder.svg"} alt="Preview" fill className="object-contain" />
                     </div>
                   )}
@@ -207,7 +207,7 @@ export default function FlowerClassifier() {
             </TabsContent>
 
             <TabsContent value="url">
-              <Card>
+              <Card className="hover:shadow-md transition-all duration-200">
                 <CardHeader>
                   <CardTitle>Image URL</CardTitle>
                   <CardDescription>Enter the URL of a flower image to classify</CardDescription>
@@ -230,7 +230,7 @@ export default function FlowerClassifier() {
                   </div>
 
                   {urlPreview && (
-                    <div className="mt-4 relative aspect-square w-full max-w-sm mx-auto border rounded-md overflow-hidden">
+                    <div className="mt-4 relative aspect-square w-full max-w-sm mx-auto border rounded-md overflow-hidden hover:border-primary/50 transition-colors">
                       <Image src={urlPreview || "/placeholder.svg"} alt="Preview" fill className="object-contain" />
                     </div>
                   )}
@@ -242,7 +242,7 @@ export default function FlowerClassifier() {
                       {SAMPLE_IMAGES.map((sample, index) => (
                         <div
                           key={index}
-                          className="cursor-pointer border rounded-md overflow-hidden hover:border-pink-300 dark:hover:border-pink-700 transition-colors"
+                          className="cursor-pointer border rounded-md overflow-hidden hover:border-pink-300 dark:hover:border-pink-700 transition-all duration-200 hover:shadow-md hover:scale-105"
                           onClick={() => selectSampleImage(sample)}
                         >
                           <div className="relative aspect-square">
@@ -280,7 +280,7 @@ export default function FlowerClassifier() {
 
           {error && (
             <div className="max-w-2xl mx-auto mt-8">
-              <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-900">
+              <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-900 hover:shadow-md transition-all duration-200">
                 <CardContent className="pt-6">
                   <p className="text-red-600 dark:text-red-400">{error}</p>
                 </CardContent>
@@ -290,7 +290,7 @@ export default function FlowerClassifier() {
 
           {result && result.class && (
             <div className="max-w-2xl mx-auto mt-8">
-              <Card className="bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-950/20 dark:to-purple-950/20 border-pink-200 dark:border-pink-900">
+              <Card className="bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-950/20 dark:to-purple-950/20 border-pink-200 dark:border-pink-900 hover:shadow-md transition-all duration-200">
                 <CardHeader>
                   <CardTitle className="text-center">Classification Result</CardTitle>
                   {result.note && (
@@ -319,15 +319,28 @@ export default function FlowerClassifier() {
             </div>
           )}
 
-          {/* Theme debug component */}
-          
-
           {/* Debug toggle button */}
-          
+          <div className="max-w-2xl mx-auto mt-8 flex justify-end">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowDebug(!showDebug)}
+              className="flex items-center gap-1"
+            >
+              <Bug className="h-4 w-4" />
+              {showDebug ? "Hide Debug" : "Show Debug"}
+            </Button>
+          </div>
 
-          
+          {/* Debug panel */}
+          {showDebug && (
+            <div className="max-w-2xl mx-auto">
+              <DebugPanel />
+            </div>
+          )}
         </div>
       </main>
+      <ThemeIndicator />
     </div>
   )
 }
